@@ -1,1 +1,1 @@
-JSadvanced
+Продвинутый курс JavaScript
