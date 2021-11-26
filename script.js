@@ -5,10 +5,18 @@ const goods = [
   { image: "images/featured/4.jpg", title: 'Shoes', price: 250 },
 ];
 
-const renderGoodsItem = (image = 'images/featured/noProduct.jpg', title = '', price = 0) => `
+class GoodsItem {
+  constructor({ image, title, price }) {
+    this.image = image;
+    this.title = title;
+    this.price = price;
+  }
+
+  render() {
+    return `
     <div class="featuredItem" data-id="1" data-name="ELLERY X M'O CAPSULE 1" data-price="52.22">
       <div class="featuredImgWrap">
-        <img src=${image} alt="">
+        <img src=${this.image} alt="">
         <div class="featuredImgDark">
           <button class="addToCart">
             <img src="images/cart.svg" alt="">
@@ -18,7 +26,7 @@ const renderGoodsItem = (image = 'images/featured/noProduct.jpg', title = '', pr
       </div>
       <div class="featuredData">
         <div class="featuredName">
-          ${title}
+          ${this.title}
         </div>
         <div class="featuredText">
           Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery
@@ -26,16 +34,89 @@ const renderGoodsItem = (image = 'images/featured/noProduct.jpg', title = '', pr
           up with Moda Operandi.
         </div>
         <div class="featuredPrice">
-          $${price}
+          $${this.price}
         </div>
       </div>
     </div>   
   `;
-
-
-const renderGoodsList = (list) => {
-  let goodsList = list.map(item => renderGoodsItem(item.image, item.title, item.price)).join("");
-  document.querySelector('.goods-list .featuredItems').innerHTML = goodsList;
+  }
 }
 
-onload = () => renderGoodsList(goods);
+class GoodsList {
+  constructor() {
+    this.goods = goods;
+  }
+
+  render() {
+    const _goods = [...this.goods];
+
+    const _goodsItems = _goods.map((item) => {
+      const goodsItem = new GoodsItem(item);
+      return goodsItem.render();
+    });
+    document.querySelector('.goods-list .featuredItems').innerHTML = _goodsItems.join('');
+  }
+
+  getTotalSum() {
+    const _goods2 = [...this.goods];
+    let goodsPrice = 0;
+    for (let i = 0; i < _goods2.length; i++) {
+      goodsPrice = goodsPrice + _goods2[i].price;
+    }
+    return goodsPrice;
+  }
+
+}
+
+onload = () => {
+  const goodsList = new GoodsList();
+  goodsList.render();
+}
+
+class Basket {
+
+  open() {
+
+  }
+
+  close() {
+
+  }
+
+  addItem() {
+
+  }
+
+  removeItem() {
+
+  }
+
+  getTotalSum() {
+
+  }
+
+  getTotalCount() {
+
+  }
+
+}
+
+class BasketItem {
+
+  addCount() {
+
+  }
+
+  removeCount() {
+
+  }
+
+  getSum() {
+
+  }
+
+  getCount() {
+
+  }
+
+}
