@@ -44,6 +44,21 @@ class GoodsItem {
 
 class GoodsList {
 
+  constructor() {
+    const searchButton = document.getElementById('search');
+    searchButton.addEventListener('click', () => {
+      this.filteredGoods();
+    });
+  }
+
+  filteredGoods() {
+    const input = document.getElementsByTagName('input')[0];
+    this.filterGoods = this.goods.filter(({ title }) => {
+      return new RegExp(input.value).test(title);
+    });
+    this.render();
+  }
+
   getTotalSum() {
     const _goods2 = [...this.goods];
     let goodsPrice = 0;
@@ -55,20 +70,19 @@ class GoodsList {
 
   setGoods() {
     return service(URL, GOODS_POSTFIX).then((data) => {
-      return reformData(data);
+      const result = reformData(data);
+      this.goods = result;
+      this.filterGoods = result;
     });
   }
 
   render() {
-    this.setGoods().then((data) => {
-      this.goods = data;
-      const _goods = [...this.goods];
-      const _goodsItems = _goods.map((item) => {
-        const goodsItem = new GoodsItem(item);
-        return goodsItem.render();
-      });
-      document.querySelector('.goods-list .featuredItems').innerHTML = _goodsItems.join('');
+    const _goods = [...this.filterGoods];
+    const _goodsItems = _goods.map((item) => {
+      const goodsItem = new GoodsItem(item);
+      return goodsItem.render();
     });
+    document.querySelector('.goods-list .featuredItems').innerHTML = _goodsItems.join('');
   }
 }
 
@@ -128,9 +142,27 @@ class BasketItem {
 
 onload = () => {
   const goodsList = new GoodsList();
-  goodsList.render();
+  goodsList.setGoods().then(() => {
+    goodsList.render();
+  });
 
   const basket = new Basket();
   basket.render();
 }
 
+
+
+
+
+
+// ДЗ №4 пункт 1:
+const str = "They said, 'We can't come to the party on Friday.'";
+const re = /'/g;
+const result = str.replace(re, '"');
+console.log(result);
+
+// ДЗ №4 пункт 2:
+const str2 = "They said, 'We can't come to the party on Friday.'";
+const re2 = /\b'(?!\b)|(?<!\b)'\b/gi;
+const result2 = str2.replace(re2, '"');
+console.log(result2);
