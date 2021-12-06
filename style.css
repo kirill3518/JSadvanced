@@ -88,6 +88,7 @@
     border: 1px solid #ebebeb;
     border-radius: 3px;
     font-size: 14px;
+    box-shadow: 6px 15px 15px rgb(0 0 0 / 21%);
 }
 
 @media (min-width: 340px) {
@@ -126,6 +127,19 @@
 .basketTotal {
     font-weight: bold;
     text-align: right;
+}
+
+.closeBasket {
+    position: absolute;
+    padding: 10px;
+    background-color: transparent;
+    top: -2px;
+    right: 0.5px;
+    border: transparent;
+}
+
+.closeBasket img:hover {
+    content: url(../images/close-card-hover.svg);
 }
 
 .goods-list {
