@@ -23,43 +23,21 @@
                   <img class="cartIcon" src="images/cart.png" alt="">
                   <span>0</span>
                </span>
-               <div v-if="isVisibleCart" class="basket">
-                  <div class="basketRow basketHeader">
-                     <div>Название товара</div>
-                     <div>Количество</div>
-                     <div>Цена за шт.</div>
-                     <div>Итого</div>
-                  </div>
-
-                  <div class="products"></div>
-
-                  <div class="basketTotal">
-                     Товаров в корзине на сумму:
-                     $<span class="basketTotalValue">0</span>
-                  </div>
-                  <button v-on:click="closeBasket" class="closeBasket"><img src="images/close-card.svg"
-                        alt="close"></button>
-               </div>
+               <basket v-if="isVisibleCart" @close="closeBasket"></basket>
             </div>
          </div>
       </header>
       <main>
          <div class="goods-list">
             <div class="featuredItems">
-               <div class="featuredItem">
+               <div v-if="!!goods.length" class="featuredItem">
+                  <goods-item v-for="item in filteredGoods" v-bind:item="item"></goods-item>
                   <div class="cartSearch">
-                     <input type="text" placeholder="Введите название товара" v-model="searchLine">
+                     <cart-search v-model="searchLine"></cart-search>
                      <button v-on:click="filterGoods">Поиск</button>
                   </div>
-                  <div class="featuredData" v-for="item in filteredGoods">
-                     <div class="featuredName">
-                        {{ item.title }}
-                     </div>
-                     <div class="featuredPrice">
-                        ${{ item.price }}
-                     </div>
-                  </div>
                </div>
+               <div v-else class="mock">Нет данных</div>
             </div>
          </div>
       </main>
