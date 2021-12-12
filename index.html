@@ -5,51 +5,65 @@
    <meta charset="UTF-8">
    <title>eShop</title>
    <link rel="stylesheet" href="style.css">
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
 
 <body>
-   <header class="header">
-      <div class="container">
-         <div class="leftHeader">
-            <img src="images/logo.png" alt="">
-            <img class="searchIcon" src="images/search.png" alt="">
-         </div>
+   <div id="app">
+      <header class="header">
+         <div class="container">
+            <div class="leftHeader">
+               <img src="images/logo.png" alt="">
+               <img class="searchIcon" src="images/search.png" alt="">
+            </div>
+            <div class="rightHeader">
+               <img src="images/bars.png" alt="">
+               <img class="userIcon" src="images/user.png" alt="">
+               <span v-on:click="showBasket" class="cartIconWrap">
+                  <img class="cartIcon" src="images/cart.png" alt="">
+                  <span>0</span>
+               </span>
+               <div v-if="isVisibleCart" class="basket">
+                  <div class="basketRow basketHeader">
+                     <div>Название товара</div>
+                     <div>Количество</div>
+                     <div>Цена за шт.</div>
+                     <div>Итого</div>
+                  </div>
 
-         <div class="rightHeader">
-            <img src="images/bars.png" alt="">
-            <img class="userIcon" src="images/user.png" alt="">
+                  <div class="products"></div>
 
-            <span class="cartIconWrap">
-               <img class="cartIcon" src="images/cart.png" alt="">
-               <span>0</span>
-            </span>
-            <div class="basket hidden">
-               <div class="cartSearch">
-                  <input type="text" placeholder="Введите название товара">
-                  <button id="search">Поиск</button>
-               </div>
-               <div class="basketRow basketHeader">
-                  <div>Название товара</div>
-                  <div>Количество</div>
-                  <div>Цена за шт.</div>
-                  <div>Итого</div>
-               </div>
-
-               <div class="products"></div>
-
-               <div class="basketTotal">
-                  Товаров в корзине на сумму:
-                  $<span class="basketTotalValue">0</span>
+                  <div class="basketTotal">
+                     Товаров в корзине на сумму:
+                     $<span class="basketTotalValue">0</span>
+                  </div>
+                  <button v-on:click="closeBasket" class="closeBasket"><img src="images/close-card.svg"
+                        alt="close"></button>
                </div>
             </div>
          </div>
-      </div>
-   </header>
-   <main>
-      <div class="goods-list">
-         <div class="featuredItems"></div>
-      </div>
-   </main>
+      </header>
+      <main>
+         <div class="goods-list">
+            <div class="featuredItems">
+               <div class="featuredItem">
+                  <div class="cartSearch">
+                     <input type="text" placeholder="Введите название товара" v-model="searchLine">
+                     <button v-on:click="filterGoods">Поиск</button>
+                  </div>
+                  <div class="featuredData" v-for="item in filteredGoods">
+                     <div class="featuredName">
+                        {{ item.title }}
+                     </div>
+                     <div class="featuredPrice">
+                        ${{ item.price }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+   </div>
 
    <script src="script.js"></script>
 </body>
