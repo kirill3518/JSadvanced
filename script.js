@@ -9,7 +9,9 @@ const reformData = (items) => {
 
 const URL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
 const GOODS_POSTFIX = "/catalogData.json";
-const CART_POSTFIX = "/getBasket.json";
+const BASKET_GOODS_POSTFIX = "/getBasket.json";
+const ADD_GOOD_TO_BASKET_POSTFIX = "/addToBasket.json";
+const DELETE_GOOD_TO_BASKET_POSTFIX = "/deleteFromBasket.json";
 
 const service = function (url, postfix) {
   return new Promise((resolve, reject) => {
@@ -24,7 +26,13 @@ const service = function (url, postfix) {
 class Basket {
 
   setBasket() {
-    return service(URL, CART_POSTFIX);
+    return service(URL, BASKET_GOODS_POSTFIX);
+  }
+
+  deleteGoodToBasket(id) {
+    return service(URL, `${DELETE_GOOD_TO_BASKET_POSTFIX}/${id}`, "DELETE").then((data) => {
+
+    });
   }
 
   render() {
@@ -64,11 +72,96 @@ class BasketItem {
 
 onload = () => {
 
+  Vue.component('cart-search', {
+    props: ['searchLine'],
+    template: `
+    <input
+      v-bind:value="searchLine"
+      v-on:input="$emit('input', $event.target.value)"
+      placeholder="Введите название товара"
+    >
+    `
+  });
+
+
+  Vue.component('basket', {
+    props: ['close'],
+    data: function () {
+      return {
+        basketGoods: []
+      }
+    },
+    template: `
+      <div class="basket">
+        <div class="basketRow basketHeader">
+          <div>Название товара</div>
+          <div>Количество</div>
+          <div>Цена за шт.</div>
+          <div>Итого</div>
+        </div>
+
+        <basket-item v-for="item in basketGoods" :item="item"></basket-item>
+
+        <div class="basketTotal">
+          Товаров в корзине на сумму:
+          $<span class="basketTotalValue">0</span>
+        </div>
+        <custom-button class="closeBasket" @click="$emit('close')"><img src="images/close-card.svg" alt="close"></custom-button>
+      </div>
+    `,
+    mounted() {
+      service(URL, BASKET_GOODS_POSTFIX).then((data) => {
+        const result = reformData(data.contents);
+        this.basketGoods = result;
+      });
+    }
+  });
+
+  Vue.component('custom-button', {
+    props: ['click'],
+    template: `
+      <button @click="$emit('click')">
+        <slot></slot>
+      </button>
+    `
+  });
+
+  Vue.component('goods-item', {
+    props: ['item'],
+    template: `
+      <div class="featuredData">
+        <div class="featuredName">
+          {{ item.title }}
+        </div>
+        <div class="featuredPrice">
+          $ {{ item.price }}
+        </div>
+        <div>
+          <custom-button>Добавить товар</custom-button>
+        </div>
+      </div>
+    `
+  });
+
+  Vue.component('basket-item', {
+    props: ['item'],
+    template: `
+      <div class="basket-item">
+        <div class="featuredName">
+          {{ item.title }}
+        </div>
+        <div class="featuredPrice">
+          $ {{ item.price }}
+        </div>
+      </div>
+    `
+  });
+
   const app = new Vue({
     el: "#app",
     data: {
       goods: 'Нет данных',
-      filteredGoods: 'Нет данных',
+      filteredGoods: [],
       searchLine: '',
       isVisibleCart: false
     },
