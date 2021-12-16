@@ -31,7 +31,7 @@
          <div class="goods-list">
             <div class="featuredItems">
                <div v-if="!!goods.length" class="featuredItem">
-                  <goods-item v-for="item in filteredGoods" v-bind:item="item"></goods-item>
+                  <goods-item v-for="item in filteredGoods" v-bind:item="item" v-bind:key="item.id"></goods-item>
                   <div class="cartSearch">
                      <cart-search v-model="searchLine"></cart-search>
                      <button v-on:click="filterGoods">Поиск</button>
