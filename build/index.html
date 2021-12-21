@@ -13,14 +13,14 @@
       <header class="header">
          <div class="container">
             <div class="leftHeader">
-               <img src="images/logo.png" alt="">
-               <img class="searchIcon" src="images/search.png" alt="">
+               <img src="../images/logo.png" alt="">
+               <img class="searchIcon" src="../images/search.png" alt="">
             </div>
             <div class="rightHeader">
-               <img src="images/bars.png" alt="">
-               <img class="userIcon" src="images/user.png" alt="">
+               <img src="../images/bars.png" alt="">
+               <img class="userIcon" src="../images/user.png" alt="">
                <span v-on:click="showBasket" class="cartIconWrap">
-                  <img class="cartIcon" src="images/cart.png" alt="">
+                  <img class="cartIcon" src="../images/cart.png" alt="">
                   <span>0</span>
                </span>
                <basket v-if="isVisibleCart" @close="closeBasket"></basket>
@@ -30,12 +30,13 @@
       <main>
          <div class="goods-list">
             <div class="featuredItems">
-               <div v-if="!!goods.length" class="featuredItem">
+               <div class="cartSearch">
+                  <cart-search v-model="searchLine"></cart-search>
+                  <button v-on:click="filterGoods">Поиск</button>
+               </div>
+               <div v-if="!!goods.length" class="featuredItemContainer">
                   <goods-item v-for="item in filteredGoods" v-bind:item="item" v-bind:key="item.id"></goods-item>
-                  <div class="cartSearch">
-                     <cart-search v-model="searchLine"></cart-search>
-                     <button v-on:click="filterGoods">Поиск</button>
-                  </div>
+
                </div>
                <div v-else class="mock">Нет данных</div>
             </div>
@@ -43,7 +44,7 @@
       </main>
    </div>
 
-   <script src="script.js"></script>
+   <script src="index.js"></script>
 </body>
 
 </html>

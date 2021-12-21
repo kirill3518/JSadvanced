@@ -1,21 +1,25 @@
 [
     {
         "id": "1",
+        "image": "../images/featured/1.jpg",
         "title": "Shirt",
         "price": 150
     },
     {
         "id": "2",
+        "image": "../images/featured/2.jpg",
         "title": "Socks",
         "price": 50
     },
     {
         "id": "3",
+        "image": "../images/featured/3.jpg",
         "title": "Jacket",
         "price": 350
     },
     {
         "id": "4",
+        "image": "../images/featured/4.jpg",
         "title": "Shoes",
         "price": 250
     }

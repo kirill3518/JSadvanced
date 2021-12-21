@@ -1,0 +1,26 @@
+{
+  "name": "jsadvanced",
+  "version": "1.0.0",
+  "description": "Продвинутый курс JavaScript",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kirill3518/JSadvanced.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kirill3518/JSadvanced/issues"
+  },
+  "homepage": "https://github.com/kirill3518/JSadvanced#readme",
+  "devDependencies": {
+    "jest": "^27.4.5",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
