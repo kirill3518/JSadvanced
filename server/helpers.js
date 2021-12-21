@@ -24,6 +24,7 @@ const getAllFromFile = (path) => new Promise((resolve, reject) => {
 });
 
 addGood = (id) => new Promise((resolve, reject) => {
+    console.log(`addGood (${id})`);
     try {
         getAllFromFile(BASKET_GOODS).then((_items) => {
             let items = [..._items];

@@ -19,7 +19,7 @@ app.get('/basketgoods', (req, res) => {
 });
 
 app.post('/:id', (req, res) => {
-    // console.log("app.post");
+    console.log("app.post");
     addGood(req.params.id).then(() => {
         getBasketGoods().then((data) => {
             res.send(data);
